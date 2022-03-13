@@ -49,10 +49,11 @@ export default function ProfilePage() {
     localStorage.getItem('id') === null
   ) {
     return (
+      <> 
       <div>
-        <h5 className="text">You need to login to continue</h5>
-        <LoginPage />
+          <LoginPage me="You need to sign in"/>
       </div>
+      </>
     );
   }
   return (

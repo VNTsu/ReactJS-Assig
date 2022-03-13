@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import './LoginPage.css';
 import axios from 'axios';
 
-export default function LoginPage() {
+export default function LoginPage(mess) {
   const [value, setValue] = useState({
     email: '',
     password: '',
@@ -83,7 +83,7 @@ export default function LoginPage() {
             <h4>
               Admin<span>Dashboard</span>
             </h4>
-            <h5>Sign in to your account.</h5>
+            <h5>{mess.me}</h5>
             <input
               type="text"
               name="email"

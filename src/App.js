@@ -11,7 +11,6 @@ const PATHS = {
   HOME: '/',
   POST: '/posts',
   PROFILE: '/profile',
-  LOGIN: '/login',
 };
 const Routers = [
   {
@@ -25,10 +24,6 @@ const Routers = [
   {
     path: PATHS.PROFILE,
     element: <ProfilePage />,
-  },
-  {
-    path: PATHS.LOGIN,
-    element: <LoginPage />,
   },
 ];
 const NavBars = [
@@ -44,39 +39,88 @@ const NavBars = [
     path: PATHS.PROFILE,
     title: 'Profile',
   },
-  {
-    path: PATHS.LOGIN,
-    title: 'Login',
-  },
 ];
 export default function App() {
-  return (
-    <>
-      <div>
-        <BrowserRouter>
-          <div>
-            <nav>
-              <a>
-                {' '}
-                {NavBars.map((navbar) => (
-                  <Link style={{ margin: 20 }} to={navbar.path}>
-                    {navbar.title}
-                  </Link>
-                ))}{' '}
-              </a>
-              <div id="indicator"></div>
-            </nav>
-          </div>
-          <div>
+  const ClearData = () => {
+    localStorage.clear();
+    window.sessionStorage.clear();
+    window.location.reload();
+  };
+  const Change = () => {
+    window.location.reload();
+  };
+  if (
+    window.sessionStorage.getItem('id') === null &&
+    localStorage.getItem('id') === null
+  ) {
+    return (
+      <>
+        <div>
+          <BrowserRouter>
+            <div>
+              <nav>
+                <a>
+                  {' '}
+                  {NavBars.map((navbar) => (
+                    <Link style={{ margin: 20 }} to={navbar.path}>
+                      {navbar.title}
+                    </Link>
+                  ))}{' '}
+                </a>
+                <Link to={'/login'}>
+                  <a onChange={Change} sx={{ flexGrow: 1 }}>
+                    LogIn
+                  </a>
+                </Link>
+                <div id="indicator"></div>
+              </nav>
+            </div>
+
             <Routes>
               {Routers.map((route) => (
                 <Route path={route.path} element={route.element}></Route>
               ))}
+              <Route path="/login" element={<LoginPage />}></Route>
               <Route path="Posts/:id" element={<PostPage />} />
             </Routes>
-          </div>
-        </BrowserRouter>
-      </div>
-    </>
-  );
+          </BrowserRouter>
+        </div>
+      </>
+    );
+  } else {
+    return (
+      <>
+        <div>
+          <BrowserRouter>
+            <div>
+              <nav>
+                <a>
+                  {' '}
+                  {NavBars.map((navbar) => (
+                    <Link style={{ margin: 20 }} to={navbar.path}>
+                      {navbar.title}
+                    </Link>
+                  ))}{' '}
+                </a>
+                <Link to={'/login'}>
+                  <a onClick={ClearData} sx={{ flexGrow: 1 }}>
+                    LogOut
+                  </a>
+                </Link>
+                <div id="indicator"></div>
+              </nav>
+            </div>
+            <div>
+              <Routes>
+                {Routers.map((route) => (
+                  <Route path={route.path} element={route.element}></Route>
+                ))}
+                <Route path="Posts/:id" element={<PostPage />} />
+              </Routes>
+            </div>
+          </BrowserRouter>
+        </div>
+      </>
+    );
+  }
 }
