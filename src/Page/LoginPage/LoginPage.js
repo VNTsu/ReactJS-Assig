@@ -72,6 +72,7 @@ const HandleOnSubmit = evt => {
 const isFormInvalid = Boolean(error.email || error.password);
   return (
     <>
+    <div>
       <body id="particles-js"></body>
       <div class="animated bounceInDown">
         <div class="container">
@@ -139,6 +140,7 @@ const isFormInvalid = Boolean(error.email || error.password);
             {showResults}
           </form>
         </div>
+      </div>
       </div>
     </>
   );

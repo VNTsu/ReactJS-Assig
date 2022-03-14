@@ -68,9 +68,7 @@ export default function App() {
                   ))}{' '}
                 </a>
                 <Link to={'/login'}>
-                  <a onChange={Change} sx={{ flexGrow: 1 }}>
-                    LogIn
-                  </a>
+                  <a onChange={Change}>LogIn</a>
                 </Link>
                 <div id="indicator"></div>
               </nav>
@@ -102,10 +100,8 @@ export default function App() {
                     </Link>
                   ))}{' '}
                 </a>
-                <Link to={'/login'}>
-                  <a onClick={ClearData} sx={{ flexGrow: 1 }}>
-                    LogOut
-                  </a>
+                <Link>
+                  <a onClick={ClearData}>LogOut</a>
                 </Link>
                 <div id="indicator"></div>
               </nav>
