@@ -1,49 +1,31 @@
 import React from 'react';
 import './ProfilePage.css';
 import React, { useState, useEffect } from 'react';
-import axios from 'axios';
 import LoginPage from '../LoginPage/LoginPage';
 import { useNavigate } from 'react-router-dom';
+import SendApiRequest from "../../CustomHook/SendApiRequest"
 
+const responseData = response => ({
+    id: response.data.id,
+    name: response.data.name,
+    createdAt: response.data.createdAt
+})
+const initialState = {
+    id: null,
+    name: null,
+    createdAt: null,
+}
 export default function ProfilePage() {
-  const [information, setInformation] = useState({
-    id: '',
-    name: '',
-    createdAt: '',
-  });
+  let id = null
+  if (window.sessionStorage.getItem("id")) {
 
-  useEffect(() => {
-    if (window.sessionStorage.getItem('id') !== null) {
-      axios({
-        method: 'GET',
-        url: `https://60dff0ba6b689e001788c858.mockapi.io/users/${window.sessionStorage.getItem(
-          'id'
-        )}`,
-      }).then((response) => {
-        setInformation({
-          id: response.data.id,
-          name: response.data.name,
-          createdAt: response.data.createdAt,
-        });
-        console.log(response);
-      });
-    } else {
-      axios({
-        method: 'GET',
-        url: `https://60dff0ba6b689e001788c858.mockapi.io/users/${localStorage.getItem(
-          'id'
-        )}`,
-      }).then((response) => {
-        setInformation({
-          id: response.data.id,
-          name: response.data.name,
-          createdAt: response.data.createdAt,
-        });
-        console.log(response);
-      });
-    }
-  }, []);
-  let navigate = useNavigate();
+      id = window.sessionStorage.getItem("id")
+  }
+  else {
+
+      id = localStorage.getItem("id")
+  }
+const { data: information, isLoading, error } = SendApiRequest(initialState, `https://60dff0ba6b689e001788c858.mockapi.io/users/${id}`, responseData)
   if (
     window.sessionStorage.getItem('id') === null &&
     localStorage.getItem('id') === null

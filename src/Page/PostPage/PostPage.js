@@ -3,27 +3,24 @@ import axios from 'axios';
 import React, { useEffect, useState } from 'react';
 import { Routes, Route, useParams } from 'react-router-dom';
 import './PostPage.css';
+import SendApiRequest from "../../CustomHook/SendApiRequest"
+
+const responseData = response => ({
+  id: response.data.id,
+  title: response.data.title,
+  body: response.data.body
+})
+const initialState = {
+  id: null,
+  title: null,
+  body: null
+}
 export default function PostPage() {
-  const [post, setPost] = useState({
-    id: null,
-    title: null,
-    body: null,
-  });
   const readParams = useParams(() => {
     return readParams.id;
-  });
-  useEffect(() => {
-    axios({
-      method: 'GET',
-      url: `https://jsonplaceholder.typicode.com/posts/${readParams.id}`,
-    }).then((response) => {
-      setPost({
-        id: response.data.id,
-        title: response.data.title,
-        body: response.data.body,
-      });
-    });
-  }, []);
+});
+
+const {data:post, isLoading, error} = SendAPIRequest(initialState, `https://jsonplaceholder.typicode.com/posts/${readParams.id}`, responseData)
   return (
     <div>
       <head>
