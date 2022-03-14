@@ -129,6 +129,16 @@ export default function LoginPage(mess) {
               value="Sign in"
               class="btn1"
             />
+            <label>
+              <input type="checkbox" />
+              <span
+                checked={rememberUser}
+                onChange={() => {
+                  setRememberUser(!rememberUser);
+                }}
+              ></span>
+              <small class="rmb">Remember me</small>
+            </label>
             {showResults}
           </form>
         </div>
